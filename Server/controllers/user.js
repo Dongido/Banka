@@ -82,6 +82,15 @@ class UsersController {
     });
   }
 
+  // GET ALL USERS -- FUNCTION
+  getAllUsers(req, res) {
+    return res.status(200).send({
+      message: 'users retrieved successfully',
+      users,
+    });
+  }
+
+
 }
 
 const userController = new UsersController();
