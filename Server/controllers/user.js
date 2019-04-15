@@ -13,7 +13,8 @@ class UsersController {
       return res.status(400).send({
         error: 'Email is required',
       });
-    } else if (!req.body.password) {
+    } 
+    else if (!req.body.password) {
       return res.status(400).send({
         error: 'Password is required',
       });
@@ -25,7 +26,7 @@ class UsersController {
     const logins = users.filter(user => Uemail === user.email);
     console.log(logins);
     if (logins) {
-      const user = {
+      const Loginuser = {
         id: parseInt(req.body.id),
         token,
         firstName: req.body.firstName,
@@ -35,7 +36,7 @@ class UsersController {
       return res.status(200).send({
         success: 'true',
         message: 'Logged In successfully',
-        user,
+        Loginuser,
       });
     }
     res.status(400).send({
