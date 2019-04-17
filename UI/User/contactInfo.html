@@ -31,7 +31,7 @@
                     <ul>
                         <li><a href="#"><i class="fas fa-plus-square"></i> Create Account</a></li>
                         <li><a href="#"><i class="fas fa-user-cog"></i> Accounts </a></li>
-                        <li><a href="../signIn.html"><i class="fas fa-user-lock"></i> Logout </a></li>
+                        <li><a href="../account/signIn.html"><i class="fas fa-user-lock"></i> Logout </a></li>
                     </ul>
                 </span>
                 <span> <i class="far fa-bell"></i> </span>
@@ -56,30 +56,58 @@
                     <div class="accounts">
                         <div class="tab-wrapper">
                             <ul class="tab">
-                                <li class="active">Account Information</li>
+                                <li>Account Information</li>
                                 <li>Personal Information</li>
-                                <li>Contact Details</li>
+                                <li class="active">Contact Details</li>
                             </ul>
                             <div class="accounts-tab">
-                                <form action="addBankAccount1.html"><!--This will be improved later -->
+                                <form><!--This will be improved later -->
                                     <fieldset>
                                         <div class="form-row">
                                             <div class="form-col">
-                                                <label>Account Type</label>
+                                                <label>State</label>
                                                 <select>
-                                                    <option disabled selected>Select Account Type</option>
-                                                    <option>Savings</option>
-                                                    <option>Current</option>
+                                                    <option disabled selected>Select State</option>
+                                                    <option>Rivers</option>
+                                                    <option>Lagos</option>
+                                                    <option>Oyo</option>
                                                 </select>
                                             </div>
                                             <div class="form-col">
-                                                <label>Branch</label>
+                                                <label>L.G.A</label>
+                                                <select>
+                                                    <option disabled selected>Select LGA</option>
+                                                    <option>Port Harcourt</option>
+                                                    <option>Ikeja</option>
+                                                    <option>Ibadan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-col">
+                                                <label>City/Town</label>
+                                                <select>
+                                                    <option disabled selected>Select City</option>
+                                                    <option>PHC</option>
+                                                    <option>Lekki phase 1</option>
+                                                    <option>Iwo</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-col">
+                                                <label>Phone Number</label>
                                                 <input type="text" />
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-col">
-                                                <button type="submit" class="title">Next Step</button>
+                                                <label>Residential Address</label>
+                                                <textarea placeholder="Enter Home Address"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-col">
+                                                <a href="javascript:history.go(-1)" class="title" style="text-decoration: none;"> Go Back </a>
+                                                <button type="submit" class="title">Create Account</button>
                                             </div>
                                         </div>
 
