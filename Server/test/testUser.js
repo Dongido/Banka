@@ -1,10 +1,10 @@
 /* eslint-disable prefer-destructuring */
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../app';
 
 const should = chai.should();
-const app = require('../app')
-;
+
 const server = 'http://localhost:5588/api/v1';
 
 chai.use(chaiHttp);
