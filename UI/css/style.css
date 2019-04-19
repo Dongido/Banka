@@ -1091,12 +1091,23 @@ display: flex;
   }
 }
 @media screen and (max-width: 600px) {
+  #accounts {
+    padding: 30px 0;
+    width: 100%;
+  }
+  #accounts .accounts .tab-wrapper {
+    margin: 0 10px 0 5px;
+    width: 95%;
+  }
+  .overview {
+      display: block;
+  }
   .overview .item{
-    -webkit-flex-basis: 90%;
-    -moz-flex-basis: 90%;
-    -ms-flex-basis: 90%;
-    flex-basis: 90%;
-    margin: 5px;
+    width: 97%;
+    padding: 5px;
+  }
+  .overview .item img{
+    width: 100%;
   }
   #main {
     margin-left:0px; 
