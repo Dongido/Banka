@@ -31,6 +31,30 @@ class AccountsController {
     });
   }
 
+  // CREATE NEW BANK ACCOUNT
+  createAccount(req, res) {
+    const rand = String(Math.random());
+    const accountNo = `68${rand.slice(2, 10)}`;
+
+    const account = {
+      id: accounts.length + 1,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      accountNumber: parseInt(accountNo),
+      createdOn: req.body.createdOn,
+      type: req.body.type,
+      status: 'Draft',
+      openingBalance: parseFloat(req.body.openingBalance),
+    };
+    accounts.push(account);
+    return res.status(201).send({
+      message: 'Account added successfully',
+      account,
+    });
+  }
+
+
 }
 
 const accountController = new AccountsController();
