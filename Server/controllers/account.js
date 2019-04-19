@@ -30,28 +30,7 @@ class AccountsController {
     });
   }
 
-    // DELETE SINGLE BANK ACCOUNT -- FUNCTION
-  deleteAccount(req, res) {
-    const id = parseInt(req.params.AcctNo, 10);
-    let thisAccount;
-    let itemIndex;
-    accounts.map((account, index) => {
-      if (account.accountNumber === id) {
-        thisAccount = account;
-        itemIndex = index;
-      }
-    });
-    if (!thisAccount) {
-      return res.status(404).send({
-        error: 'Account not found'
-      }); 
-    }
-    accounts.splice(itemIndex, 1);
-
-    return res.status(200).send({
-      message: 'Account deleted successfuly',
-    });
-  }
+  
 }
 
 const accountController = new AccountsController();
