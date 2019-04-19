@@ -4,7 +4,7 @@ const data = fs.readFileSync('./model/Account.json');
 const accounts = JSON.parse(data);
 
 class AccountsController {
-
+  
   // GET ACCOUNTS --FUNCTION
   getAllAccounts(req, res) {
     return res.status(200).send({
@@ -29,6 +29,7 @@ class AccountsController {
       error: 'Account does not exist',
     });
   }
+
 }
 
 const accountController = new AccountsController();
