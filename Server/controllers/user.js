@@ -82,6 +82,22 @@ class UsersController {
     });
   }
 
+  // GET A USER --FUNCTION
+  getUser(req, res) {
+    const id = parseInt(req.params.id, 10);
+    users.map((user) => {
+      if (user.id === id) {
+        return res.status(200).send({
+          message: 'user retrieved successfully',
+          user,
+        });
+      }
+    });
+    return res.status(404).send({
+      error: 'user does not exist',
+    });
+  }
+
 }
 
 const userController = new UsersController();
