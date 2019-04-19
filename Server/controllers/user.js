@@ -82,6 +82,30 @@ class UsersController {
     });
   }
 
+   // DELETE A USER RECORD FUNCTION
+  deleteUser(req, res) {
+    const id = parseInt(req.params.id, 10);
+    let thisUser;
+    let itemIndex;
+    users.map((user, index) => {
+      if (user.id === id) {
+        thisUser = user;
+        itemIndex = index;
+      }
+    });
+
+    if (!thisUser) {
+      return res.status(404).send({
+        error: 'user not found',
+      });
+    }
+    users.splice(itemIndex, 1);
+
+    return res.status(200).send({
+      message: 'user deleted successfuly',
+    });
+  }
+
 }
 
 const userController = new UsersController();
