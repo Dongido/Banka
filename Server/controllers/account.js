@@ -14,7 +14,22 @@ class AccountsController {
     });
   }
 
-  
+  // GET SINGLE BANK ACCOUNT -- FUNCTION
+  getAccount(req, res) {
+    const id = parseInt(req.params.id, 10);
+    accounts.map((account) => {
+      if (account.id === id) {
+        return res.status(200).send({
+          message: 'Account retrieved successfully',
+          account,
+        });
+      }
+    });
+    return res.status(404).send({
+      error: 'Account does not exist',
+    });
+  }
+
 }
 
 const accountController = new AccountsController();
