@@ -30,7 +30,28 @@ class AccountsController {
     });
   }
 
-  
+    // ACTIVATE & DEACTIVATE ACCOUNT --FUNCTION
+  changeStatus(req, res) {
+    if (!req.body.status) {
+      return res.status(400).send({
+        error: 'Status is required',
+      });
+    }
+    const id = parseInt(req.params.AcctNo, 10);
+
+    // eslint-disable-next-line prefer-destructuring
+    const status = req.body.status;
+    const result = accounts.filter(account => id === account.accountNumber);
+    if (result) {
+      result[0].status = status;
+      const output = result[0];
+      return res.status(200).send({
+        message: `Account successfully updated, status is now ${status}`,
+        output,
+      });
+    }
+    return res.status(500).send({ error: 'Something went wrong make sure this account exist' });
+  } 
 }
 
 const accountController = new AccountsController();
