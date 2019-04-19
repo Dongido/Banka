@@ -82,22 +82,41 @@ class UsersController {
     });
   }
 
-  // GET A USER --FUNCTION
-  getUser(req, res) {
+  // UPDATE USER INFO --FUNCTION
+  updateUser(req, res) {
     const id = parseInt(req.params.id, 10);
-    users.map((user) => {
+    let thisUser;
+    let itemIndex;
+    users.map((user, index) => {
       if (user.id === id) {
-        return res.status(200).send({
-          message: 'user retrieved successfully',
-          user,
-        });
+        thisUser = user;
+        itemIndex = index;
       }
     });
-    return res.status(404).send({
-      error: 'user does not exist',
+    if (!thisUser) {
+      return res.status(404).send({
+        error: 'user not found',
+      });
+    }
+    const updatedUser = {
+      id: thisUser.id,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      DOB: req.body.DOB,
+      country: req.body.country,
+      state: req.body.state,
+      city: req.body.city,
+      address: req.body.address,
+    };
+    users.splice(itemIndex, 1, updatedUser);
+
+    return res.status(201).send({
+      message: 'user updated successfully',
+      updatedUser,
     });
   }
-
 }
 
 const userController = new UsersController();
