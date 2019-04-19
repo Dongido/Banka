@@ -14,7 +14,7 @@ class AccountsController {
     });
   }
 
-  // GET SINGLE BANK ACCOUNT --FUNCTION
+  // GET SINGLE BANK ACCOUNT -- FUNCTION
   getAccount(req, res) {
     const id = parseInt(req.params.id, 10);
     accounts.map((account) => {
