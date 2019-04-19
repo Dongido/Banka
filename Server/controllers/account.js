@@ -4,7 +4,7 @@ const data = fs.readFileSync('./model/Account.json');
 const accounts = JSON.parse(data);
 
 class AccountsController {
-  
+
   // GET ACCOUNTS --FUNCTION
   getAllAccounts(req, res) {
     return res.status(200).send({
@@ -13,6 +13,7 @@ class AccountsController {
       accounts,
     });
   }
+
 
   // GET SINGLE BANK ACCOUNT -- FUNCTION
   getAccount(req, res) {
