@@ -82,7 +82,7 @@ class UsersController {
     });
   }
 
-    // UPDATE USER INFO --FUNCTION
+    //UPDATE USER INFO -- FUNCTION
   updateUser(req, res) {
     const id = parseInt(req.params.id, 10);
     let thisUser;
