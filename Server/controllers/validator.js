@@ -34,7 +34,7 @@ class ReqValidators {
       return res.status(400).send({
         error: 'First Name is required',
       });
-    } else if (!req.body.lastName) {
+    } if (!req.body.lastName) {
       return res.status(400).send({
         error: 'Last Name is required',
       });
@@ -42,7 +42,7 @@ class ReqValidators {
     next();
   }
 
-  ValidateAccount(req, res, next){
+  ValidateAccount(req, res, next) {
     if (!req.body.type) {
       return res.status(400).send({
         error: 'Account type is required',
@@ -63,7 +63,7 @@ class ReqValidators {
     }
     next();
   }
-  
+
 }
 
 const ReqValidator = new ReqValidators();

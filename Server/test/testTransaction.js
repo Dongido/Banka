@@ -1,4 +1,9 @@
 /* eslint-disable prefer-destructuring */
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../app';
+
+const should = chai.should();
 
 const server = 'http://localhost:5588/api/v1/transactions';
 
