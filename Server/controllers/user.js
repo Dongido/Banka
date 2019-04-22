@@ -1,29 +1,35 @@
 /* eslint-disable no-else-return */
 /* eslint-disable class-methods-use-this */
-const fs = require('fs');
-
-const data = fs.readFileSync('./model/User.json');
-const users = JSON.parse(data);
+import jwt from 'jsonwebtoken';
+import users from '../model/UserData';
 
 class UsersController {
+  // GET ALL USERS -- FUNCTION
+  getAllUsers(req, res) {
+    return res.status(200).send({
+      message: 'users retrieved successfully',
+      users,
+    });
+  }
+
+  // GET A USER --FUNCTION
+  getUser(req, res) {
+    const id = parseInt(req.params.id, 10);
+    users.map((user) => {
+      if (user.id === id) {
+        return res.status(200).send({
+          message: 'user retrieved successfully',
+          user,
+        });
+      }
+    });
+    return res.status(404).send({
+      error: 'user does not exist',
+    });
+  }
 
   // CREATE NEW USER -- FUNCTION
   createUser(req, res) {
-    if (!req.body.email) {
-      return res.status(400).send({
-        error: 'Email is required',
-      });
-    } else if (!req.body.firstName) {
-      return res.status(400).send({
-        error: 'First Name is required',
-      });
-    } else if (!req.body.lastName) {
-      return res.status(400).send({
-        error: 'Last Name is required',
-      });
-    }
-    const rand = String(Math.random());
-    const token = `hk${rand.slice(2, 16)}_bj`;
     const user = {
       id: users.length + 1,
       firstName: req.body.firstName,
@@ -36,7 +42,6 @@ class UsersController {
       city: req.body.city,
       address: req.body.address,
       type: req.body.type,
-      token,
       isAdmin: req.body.isAdmin,
     };
     users.push(user);
@@ -48,41 +53,78 @@ class UsersController {
 
   // LOGIN USER -- FUNCTION
   LoginUser(req, res) {
-    if (!req.body.email) {
-      return res.status(400).send({
-        error: 'Email is required',
-      });
-    } else if (!req.body.password) {
-      return res.status(400).send({
-        error: 'Password is required',
-      });
-    }
     const Uemail = req.body.email;
-    const rand = String(Math.random());
-    const token = `hk${ rand.slice(2, 16)}_bj`;
-
     const logins = users.filter(user => Uemail === user.email);
-    console.log(logins);
     if (logins) {
       const Loginuser = {
         id: parseInt(req.body.id),
-        token,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
       };
-      return res.status(200).send({
-        success: 'true',
-        message: 'Logged In successfully',
-        Loginuser,
+      jwt.sign(Loginuser, 'secretkey', { expiresIn: '2 days' }, (err, token) =>
+      {
+        res.json({ token });
+      });
+
+      jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if (err) {
+          return res.status(403).send({
+            error: 'Oops! Authentication failed',
+          });
+        } else {
+          return res.status(200).send({
+            success: 'true',
+            message: 'Logged In successfully',
+            Loginuser,
+            authData,
+          });
+        }
       });
     }
     res.status(400).send({
       error: 'User do not exist, make sure you enter credentials correctly',
     });
+
   }
 
-   // DELETE A USER RECORD FUNCTION
+  // UPDATE USER INFO --FUNCTION
+  updateUser(req, res) {
+    const id = parseInt(req.params.id, 10);
+    let thisUser;
+    let itemIndex;
+    users.map((user, index) => {
+      if (user.id === id) {
+        thisUser = user;
+        itemIndex = index;
+      }
+    });
+    if (!thisUser) {
+      return res.status(404).send({
+        error: 'user not found',
+      });
+    }
+    const updatedUser = {
+      id: thisUser.id,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      DOB: req.body.DOB,
+      country: req.body.country,
+      state: req.body.state,
+      city: req.body.city,
+      address: req.body.address,
+    };
+    users.splice(itemIndex, 1, updatedUser);
+
+    return res.status(201).send({
+      message: 'user updated successfully',
+      updatedUser,
+    });
+  }
+
+  // DELETE A USER RECORD FUNCTION
   deleteUser(req, res) {
     const id = parseInt(req.params.id, 10);
     let thisUser;
@@ -105,8 +147,7 @@ class UsersController {
       message: 'user deleted successfuly',
     });
   }
-
 }
 
 const userController = new UsersController();
-module.exports = userController;
+export default userController;

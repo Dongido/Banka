@@ -1,10 +1,7 @@
 /* eslint-disable class-methods-use-this */
-const fs = require('fs');
-const data = fs.readFileSync('./model/Account.json');
-const accounts = JSON.parse(data);
+import accounts from '../model/accountData';
 
 class AccountsController {
-
   // GET ACCOUNTS --FUNCTION
   getAllAccounts(req, res) {
     return res.status(200).send({
@@ -14,7 +11,7 @@ class AccountsController {
     });
   }
 
-  // GET SINGLE BANK ACCOUNT -- FUNCTION
+  // GET SINGLE BANK ACCOUNT --FUNCTION
   getAccount(req, res) {
     const id = parseInt(req.params.id, 10);
     accounts.map((account) => {
@@ -30,7 +27,54 @@ class AccountsController {
     });
   }
 
-    // ACTIVATE & DEACTIVATE ACCOUNT --FUNCTION
+  // CREATE NEW BANK ACCOUNT
+  createAccount(req, res) {
+    const rand = String(Math.random());
+    const accountNo = `68${rand.slice(2, 10)}`;
+
+    const account = {
+      id: accounts.length + 1,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      accountNumber: parseInt(accountNo),
+      createdOn: req.body.createdOn,
+      type: req.body.type,
+      status: 'Draft',
+      openingBalance: parseFloat(req.body.openingBalance),
+    };
+    accounts.push(account);
+    return res.status(201).send({
+      message: 'Account added successfully',
+      account,
+    });
+  }
+
+  // DELETE SINGLE BANK ACCOUNT -- FUNCTION
+  deleteAccount(req, res) {
+    const id = parseInt(req.params.AcctNo, 10);
+    let thisAccount;
+    let itemIndex;
+    accounts.map((account, index) => {
+      if (account.accountNumber === id) {
+        thisAccount = account;
+        itemIndex = index;
+      }
+    });
+    if (!thisAccount) {
+      return res.status(404).send({
+        error: 'Account not found'
+      });
+      
+    }
+    accounts.splice(itemIndex, 1);
+
+    return res.status(200).send({
+      message: 'Account deleted successfuly',
+    });
+  }
+
+  // ACTIVATE & DEACTIVATE ACCOUNT --FUNCTION
   changeStatus(req, res) {
     if (!req.body.status) {
       return res.status(400).send({
@@ -51,9 +95,8 @@ class AccountsController {
       });
     }
     return res.status(500).send({ error: 'Something went wrong make sure this account exist' });
-  } 
+  }
 }
 
 const accountController = new AccountsController();
-// export default accountController;
-module.exports = accountController;
+export default accountController;
