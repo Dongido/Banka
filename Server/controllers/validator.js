@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 
 class ReqValidators {
   ValidateTransact(req, res, next)
@@ -11,11 +12,6 @@ class ReqValidators {
         errror: 'amount is required',
       });
     }
-    if (!req.body.accountBalance) {
-      return res.status(400).send({
-        errror: '​ “Account Balance is required',
-      });
-    }
     if (!req.body.cashier) {
       return res.status(400).send({
         error: 'Cashier is required',
@@ -24,7 +20,7 @@ class ReqValidators {
     next();
   }
 
-  ValidateUser(req, res, next)
+  ValidateSignUP(req, res, next)
   {
     if (!req.body.email) {
       return res.status(400).send({
@@ -37,6 +33,24 @@ class ReqValidators {
     } if (!req.body.lastName) {
       return res.status(400).send({
         error: 'Last Name is required',
+      });
+    } if (!req.body.password) {
+      return res.status(400).send({
+        error: 'Password is required',
+      });
+    }
+    next();
+  }
+
+  ValidateSignIn(req, res, next)
+  {
+    if (!req.body.email) {
+      return res.status(400).send({
+        error: 'Email is required',
+      });
+    } if (!req.body.password) {
+      return res.status(400).send({
+        error: 'Password is required',
       });
     }
     next();

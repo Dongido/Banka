@@ -5,7 +5,7 @@ class AccountsController {
   // GET ACCOUNTS --FUNCTION
   getAllAccounts(req, res) {
     return res.status(200).send({
-      success: 'true',
+      status: 200,
       message: 'Accounts retrieved successfully',
       accounts,
     });
@@ -42,11 +42,20 @@ class AccountsController {
       type: req.body.type,
       status: 'Draft',
       openingBalance: parseFloat(req.body.openingBalance),
+      accountBalance: parseFloat(req.body.openingBalance),
     };
-    accounts.push(account);
-    return res.status(201).send({
-      message: 'Account added successfully',
-      account,
+    const acct = parseInt(accountNo);
+    const accExist = accounts.find(acc => acct === acc.accountNumber);
+    if (!accExist) {
+      accounts.push(account);
+      return res.status(201).send({
+        status: 201,
+        message: 'Account added successfully',
+        account,
+      });
+    }
+    return res.status(403).send({
+      message: 'This account already exist',
     });
   }
 
@@ -63,9 +72,8 @@ class AccountsController {
     });
     if (!thisAccount) {
       return res.status(404).send({
-        error: 'Account not found'
-      });
-      
+        error: 'Account not found',
+      }); 
     }
     accounts.splice(itemIndex, 1);
 
@@ -85,13 +93,14 @@ class AccountsController {
 
     // eslint-disable-next-line prefer-destructuring
     const status = req.body.status;
-    const result = accounts.filter(account => id === account.accountNumber);
+    const result = accounts.find(account => id === account.accountNumber);
     if (result) {
-      result[0].status = status;
-      const output = result[0];
+      result.status = status;
+      const data = result;
       return res.status(200).send({
+        status: 200,
         message: `Account successfully updated, status is now ${status}`,
-        output,
+        data,
       });
     }
     return res.status(500).send({ error: 'Something went wrong make sure this account exist' });
