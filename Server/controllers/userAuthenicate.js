@@ -1,10 +1,10 @@
 
 class UsersAuth {
    //verify token
-   verifyToken(req, res, next){
+   verifyToken(req, res, next) {
     const bearerheader = req.headers['authorization'];
     // check if bearer is undefined
-    if(typeof bearerheader !== 'undefined'){
+    if(typeof bearerheader !== 'undefined') {
       //split at the space
       const bearer = bearerheader.split(' ');
       // Get token from array
@@ -14,7 +14,9 @@ class UsersAuth {
       //Next middleware
       next();
     }else{
-      res.sendStatus(403);
+      res.sendStatus(403).send({
+        error: "Access denied"
+      })
     }
   }
 
